@@ -4,15 +4,18 @@ Use this program to pick what competitive servers you want to play on competitiv
 
 #Usage:
 
-BLOCKING
+#Blocking
 
 1: Click the servers you want to play
+
 2: Press "Apply"
 
-UNBLOCKING	
+#Unblocking
 
 1: Press "Reset"
+
 2: Close the application
 
-
 #Download - http://www.milnes.org/CSGOCSB.zip
+
+For support email: github@milnes.org
