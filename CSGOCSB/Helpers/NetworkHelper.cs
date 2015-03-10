@@ -1,12 +1,12 @@
-﻿using CSGOMM.Helpers;
-using CSGOMM.Model;
-using CSGOMM.ViewModel;
+﻿using CSGOCSB.Helpers;
+using CSGOCSB.Model;
+using CSGOCSB.ViewModel;
 using System;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace CSGOMM
+namespace CSGOCSB
 {
     public class Network
     {

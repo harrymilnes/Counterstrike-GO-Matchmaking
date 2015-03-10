@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace CSGOMM.ViewModel
+namespace CSGOCSB.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

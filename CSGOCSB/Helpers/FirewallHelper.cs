@@ -1,10 +1,10 @@
-﻿using CSGOMM.Model;
+﻿using CSGOCSB.Model;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace CSGOMM.Helpers
+namespace CSGOCSB.Helpers
 {
     public static class FirewallHelper
     {

@@ -1,7 +1,7 @@
-﻿using CSGOMM.Helpers;
+﻿using CSGOCSB.Helpers;
 using System.Windows;
 
-namespace CSGOMM
+namespace CSGOCSB
 {
     public partial class MainWindow : Window
     {

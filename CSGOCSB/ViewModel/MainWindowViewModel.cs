@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using CSGOMM.DataAccess;
+using CSGOCSB.DataAccess;
 using System.Threading.Tasks;
 
-namespace CSGOMM.ViewModel
+namespace CSGOCSB.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {

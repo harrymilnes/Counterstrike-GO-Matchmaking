@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CSGOMM.Model;
+using CSGOCSB.Model;
 using System.Threading.Tasks;
 
-namespace CSGOMM.DataAccess
+namespace CSGOCSB.DataAccess
 {
     public class ServerRepository
     {

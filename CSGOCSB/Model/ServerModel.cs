@@ -1,10 +1,10 @@
-﻿using CSGOMM.Helpers;
-using CSGOMM.ViewModel;
+﻿using CSGOCSB.Helpers;
+using CSGOCSB.ViewModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace CSGOMM.Model
+namespace CSGOCSB.Model
 {
     public class Margin
     {

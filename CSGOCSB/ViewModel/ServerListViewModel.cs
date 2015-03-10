@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using CSGOMM.DataAccess;
+using CSGOCSB.DataAccess;
 using System.Windows.Input;
-using CSGOMM.Model;
+using CSGOCSB.Model;
 using System.Diagnostics;
-using CSGOMM.Helpers;
+using CSGOCSB.Helpers;
 using System.Threading.Tasks;
 
-namespace CSGOMM.ViewModel
+namespace CSGOCSB.ViewModel
 {
     public class ServerListViewModel : ViewModelBase
     {
@@ -46,7 +46,7 @@ namespace CSGOMM.ViewModel
 
         public void AboutCommandExecute()
         {
-            Process.Start("https://github.com/harrymilnes/CSGOMatchMaker");
+            Process.Start("https://github.com/harrymilnes/CS-GO-CSB");
         }
 
         RelayCommand _pingallCommand;

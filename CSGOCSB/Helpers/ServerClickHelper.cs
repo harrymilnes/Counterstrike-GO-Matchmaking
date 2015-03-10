@@ -1,12 +1,12 @@
-﻿using CSGOMM.Model;
-using CSGOMM.ViewModel;
+﻿using CSGOCSB.Model;
+using CSGOCSB.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace CSGOMM.Helpers
+namespace CSGOCSB.Helpers
 {
 
     public static class ServerClickHelper

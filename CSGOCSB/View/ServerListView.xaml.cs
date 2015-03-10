@@ -1,4 +1,4 @@
-﻿using CSGOMM.Helpers;
+﻿using CSGOCSB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CSGOMM.View
+namespace CSGOCSB.View
 {
     /// <summary>
     /// Interaction logic for ServerListView.xaml

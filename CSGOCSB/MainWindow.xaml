@@ -1,8 +1,8 @@
-﻿<Window x:Class="CSGOMM.MainWindow"
+﻿<Window x:Class="CSGOCSB.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:CSGOMM.ViewModel"
-        xmlns:vw="clr-namespace:CSGOMM.View"
+        xmlns:vm="clr-namespace:CSGOCSB.ViewModel"
+        xmlns:vw="clr-namespace:CSGOCSB.View"
         Title="CS:GO Competitive Server Blocker" Height="599.153" Width="916.525" ResizeMode="NoResize"
         Closing="Window_Closing">
 

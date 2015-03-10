@@ -16,6 +16,15 @@ Use this program to pick what competitive servers you want to play on competitiv
 
 2: Close the application
 
+
+#Limitations:-
+
+Software needs to be ran as administrator since it changes your firewall options to block other servers.
+
+You must be running MS firewall otherwise it won't work 100%
+
+You may have to increase your maximum match making ping in the game menu.
+
 #Download - http://www.milnes.org/CSGOCSB.zip
 
 For support email: github@milnes.org

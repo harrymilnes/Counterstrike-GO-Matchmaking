@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using CSGOMM.ViewModel;
+using CSGOCSB.ViewModel;
 
-namespace CSGOMM
+namespace CSGOCSB
 {
     public partial class App : Application
     {

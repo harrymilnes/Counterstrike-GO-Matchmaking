@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace CSGOMM.ViewModel
+namespace CSGOCSB.ViewModel
 {
     public class RelayCommand : ICommand
     {
