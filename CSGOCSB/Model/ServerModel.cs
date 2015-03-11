@@ -71,7 +71,7 @@ namespace CSGOCSB.Model
 
         public void SelectCommandExecuteAsync()
         {
-            ServerClickHelper.ServerClicked(this);
+            new ServerClickHelper().ServerClickedAsync(this);
         }
 
         bool BlockCommandCanExecute

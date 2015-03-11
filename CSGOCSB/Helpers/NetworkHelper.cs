@@ -12,19 +12,19 @@ namespace CSGOCSB
     {
         public async Task PingAsync(ServerModel steamServer)
         {
-            ServerClickHelper.ChangeColourUnclickedServer(steamServer, new SolidColorBrush(Colors.White));
+            new ServerClickHelper().ChangeColourUnclickedServer(steamServer, new SolidColorBrush(Colors.White));
             var pingSender = new Ping().SendPingAsync(steamServer.Hostname, 10000);
             var results = await pingSender;
             if (results.Status == IPStatus.Success)
             {
-                ServerClickHelper.ChangeColourUnclickedServer(steamServer, new SolidColorBrush(Colors.Green));
+                new ServerClickHelper().ChangeColourUnclickedServer(steamServer, new SolidColorBrush(Colors.Green));
                 steamServer.BlockStatus = false;
                 steamServer.Ping = String.Format("Ping: {0}", results.RoundtripTime);
                 return;
             }
             else
             {
-                ServerClickHelper.ChangeColourUnclickedServer(steamServer, new SolidColorBrush(Colors.Red));
+                new ServerClickHelper().ChangeColourUnclickedServer(steamServer, new SolidColorBrush(Colors.Red));
                 steamServer.BlockStatus = true;
                 steamServer.Ping = String.Format("Blocked");
             }
@@ -33,7 +33,7 @@ namespace CSGOCSB
         public async Task PingAllServersAsync()
         {
             var servers = MainWindowViewModel.viewModel.AllServers;
-            foreach (var server in servers )
+            foreach (var server in servers)
             {
                 var awaitedServer = server;
                 if (awaitedServer.BlockStatus == false)

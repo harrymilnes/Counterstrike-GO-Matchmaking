@@ -84,7 +84,7 @@ namespace CSGOCSB.ViewModel
 
         async Task ApplyServerBlockingCommandExecuteAsync()
         {
-            ServerClickHelper.ApplyServerBlocking();
+            new ServerClickHelper().ApplyServerBlocking();
         }
 
         RelayCommand _resetCommand;
@@ -102,7 +102,7 @@ namespace CSGOCSB.ViewModel
 
         async Task ResetAllCommandExecuteAsync()
         {
-            await ServerClickHelper.ResetServerBlockingAsync();
+            await new ServerClickHelper().ResetServerBlockingAsync();
         }
 
         bool CommandsCanExecute
