@@ -1,47 +1,44 @@
 ﻿using CSGOCSB.Model;
 using CSGOCSB.ViewModel;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace CSGOCSB.Helpers
+namespace CSGOCSB.HttpHelpers
 {
-    public class ServerClickHelper
+    public static class ServerClickHelper
     {
-        public static IList<ServerModel> ClickedServerList = new List<ServerModel>();
-
-        public void ApplyServerBlocking()
+        public static void ApplyServerBlocking()
         {
             if (ServerListViewModel.ServersCurrentlyBlocked)
                 return;
 
-            if (ClickedServerList.Count == 0)
+            if (ApplicationData.ClickedServerList.Count == 0)
                 return;
 
             var SteamServers = MainWindowViewModel.viewModel.AllServers;
-            var ServerstoBlock = SteamServers.Except(ClickedServerList).ToList();
+            var ServerstoBlock = SteamServers.Except(ApplicationData.ClickedServerList).ToList();
 
             foreach (var unclickedServer in ServerstoBlock)
             {
-                new FirewallHelper().BlockServer(unclickedServer);
+                FirewallHelper.BlockServer(unclickedServer);
             }
 
-            foreach (var clickedServer in ClickedServerList)
+            foreach (var clickedServer in ApplicationData.ClickedServerList)
             {
                 clickedServer.BlockedColourBrush = new SolidColorBrush(Colors.Green);
             }
 
-            ClickedServerList.Clear();
+            ApplicationData.ClickedServerList.Clear();
             ServerListViewModel.ServersCurrentlyBlocked = true;
         }
 
-        public async Task ServerClickedAsync(ServerModel clickedServer)
+        public static async Task ServerClickedAsync(ServerModel clickedServer)
         {
-            if (clickedServer.BlockStatus)
+            if (ApplicationData.CurrentBlockedServers.Contains(clickedServer))
             {
-                await new FirewallHelper().UnblockServerAsync(clickedServer);
+                await FirewallHelper.UnblockServerAsync(clickedServer);
                 if (!ServerListViewModel.ServersCurrentlyBlocked)
                 {
                     clickedServer.BlockedColourBrush = new SolidColorBrush(Colors.DodgerBlue);
@@ -51,54 +48,71 @@ namespace CSGOCSB.Helpers
 
             if (!ServerListViewModel.ServersCurrentlyBlocked)
             {
-                if (ClickedServerList.Contains(clickedServer))
+                if (ApplicationData.ClickedServerList.Contains(clickedServer))
                 {
-                    ClickedServerList.Remove(clickedServer);
+                    ApplicationData.ClickedServerList.Remove(clickedServer);
                     clickedServer.BlockedColourBrush = new SolidColorBrush(Colors.Green);
-                    await new Network().PingAsync(clickedServer);
+                    await NetworkHelper.PingAsync(clickedServer);
                 }
                 else
                 {
                     clickedServer.BlockedColourBrush = new SolidColorBrush(Colors.DodgerBlue);
-                    ClickedServerList.Add(clickedServer);
+                    ApplicationData.ClickedServerList.Add(clickedServer);
                 }
             }
             else
             {
-                if (!clickedServer.BlockStatus)
+                if (!ApplicationData.CurrentBlockedServers.Contains(clickedServer))
                 {
-                    new FirewallHelper().BlockServer(clickedServer);
+                    FirewallHelper.BlockServer(clickedServer);
                 }
             }
         }
 
-        public async Task ResetServerBlockingAsync()
+        public static async Task ResetServerBlockingAsync()
         {
             var servers = MainWindowViewModel.viewModel.AllServers;
-            ClickedServerList.Clear();
+            ApplicationData.ClickedServerList.Clear();
 
             foreach (var server in servers)
             {
                 var awaitedServer = server;
-                if (awaitedServer.BlockStatus)
-                    await new FirewallHelper().UnblockServerAsync(awaitedServer);
+                if (ApplicationData.CurrentBlockedServers.Contains(server))
+                    await FirewallHelper.UnblockServerAsync(awaitedServer);
 
-                if (!awaitedServer.BlockStatus)
+                if (!ApplicationData.CurrentBlockedServers.Contains(server))
                     awaitedServer.BlockedColourBrush = new SolidColorBrush(Colors.Green);
             }
 
             ServerListViewModel.ServersCurrentlyBlocked = false;
-
-            if (MainWindow.ApplicationClosing)
+            if (ApplicationData.IsApplicationClosing)
                 Application.Current.Shutdown();
         }
 
-        public void ChangeColourUnclickedServer(ServerModel steamServer, SolidColorBrush solidColourBrush)
+        public static void ChangeColourUnclickedServer(ServerModel steamServer, SolidColorBrush solidColourBrush)
         {
             if (steamServer.BlockedColourBrush.ToString() == "#FF1E90FF")
                 return;
 
             steamServer.BlockedColourBrush = solidColourBrush;
+        }
+
+        public static void ChangeColourAllServer(SolidColorBrush solidColourBrush)
+        {
+            var servers = MainWindowViewModel.viewModel.AllServers;
+            foreach(var server in servers)
+            {
+                server.BlockedColourBrush = solidColourBrush;
+            }
+        }
+        
+        public static void ChangeAllServerStatus(string status)
+        {
+            var servers = MainWindowViewModel.viewModel.AllServers;
+            foreach(var server in servers)
+            {
+                server.Ping = status;
+            }
         }
     }
 }

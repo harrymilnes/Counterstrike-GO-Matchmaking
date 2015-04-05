@@ -1,5 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using CSGOCSB.DataAccess;
+﻿using CSGOCSB.DataAccess;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace CSGOCSB.ViewModel

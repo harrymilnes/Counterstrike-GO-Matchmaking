@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CSGOCSB.Model;
+﻿using CSGOCSB.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CSGOCSB.DataAccess

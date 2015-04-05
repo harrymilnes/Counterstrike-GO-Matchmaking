@@ -1,4 +1,4 @@
-﻿using CSGOCSB.Helpers;
+﻿using CSGOCSB.HttpHelpers;
 using CSGOCSB.ViewModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -52,7 +52,7 @@ namespace CSGOCSB.Model
             };
 
             steamServer.LabelMarginString = steamServer.LabelMargin.ToString();
-            await new Network().PingAsync(steamServer);
+            await NetworkHelper.PingAsync(steamServer);
             return steamServer;
         }
 
@@ -69,9 +69,13 @@ namespace CSGOCSB.Model
             }
         }
 
-        public void SelectCommandExecuteAsync()
+        public async Task SelectCommandExecuteAsync()
         {
-            new ServerClickHelper().ServerClickedAsync(this);
+            if(ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.BlockingServers)
+                await ServerClickHelper.ServerClickedAsync(this);
+
+            if (ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.ObservingServerPings)
+                await NetworkHelper.PingAsync(this);
         }
 
         bool BlockCommandCanExecute
@@ -100,7 +104,6 @@ namespace CSGOCSB.Model
         {
             get
             {
-
                 return _blockStatus;
             }
             set
