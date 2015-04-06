@@ -34,16 +34,16 @@ namespace CSGOCSB.HttpHelpers
                 var serverLoadData = (from d in ApplicationData.ServerLoadList.loadData where d.Servername == server.Country select new { d.Capacity, d.Load }).FirstOrDefault();
                 server.Ping = string.Format("{0}", serverLoadData.Load);
 
-                if (serverLoadData.Load == "idle" || serverLoadData.Load == "low")
+                if (serverLoadData.Load.ToLower() == "idle" || serverLoadData.Load.ToLower() == "low")
                 {
                     server.BlockedColourBrush = new SolidColorBrush(Colors.Green);
                     server.Ping = string.Format("   {0}", serverLoadData.Load); //Spacing is a bit hacky but it'll do for now.
                 }
 
-                if (serverLoadData.Load == "medium")
+                if (serverLoadData.Load.ToLower() == "medium")
                     server.BlockedColourBrush = new SolidColorBrush(Colors.Orange);
 
-                if (serverLoadData.Load == "high" || serverLoadData.Load == "full")
+                if (serverLoadData.Load.ToLower() == "high" || serverLoadData.Load.ToLower() == "full")
                 {
                     server.Ping = string.Format("   {0}", serverLoadData.Load);
                     server.BlockedColourBrush = new SolidColorBrush(Colors.Red); //Spacing is a bit hacky but it'll do for now.
