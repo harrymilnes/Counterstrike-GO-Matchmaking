@@ -14,9 +14,9 @@ namespace CSGOCSB.ViewModel
             this.ViewModels.Add(viewModel);
         }
 
-        public static async Task<MainWindowViewModel> MainWindowInitaliserAsync()
+        public static MainWindowViewModel MainWindowInitaliserAsync()
         {
-            var __serverRepository = await ServerRepository.CreateAsync();
+            var __serverRepository = ServerRepository.Create();
             viewModel = new ServerListViewModel(__serverRepository);
             return new MainWindowViewModel(viewModel);
         }

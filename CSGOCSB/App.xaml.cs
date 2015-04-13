@@ -9,9 +9,10 @@ namespace CSGOCSB
         {
             base.OnStartup(e);
             MainWindow window = new MainWindow();
-            var viewModel = await MainWindowViewModel.MainWindowInitaliserAsync();
+            var viewModel = MainWindowViewModel.MainWindowInitaliserAsync();
             window.DataContext = viewModel;
             window.Show();
+            await NetworkHelper.PingAllServersAsync();
         }
     }
 }

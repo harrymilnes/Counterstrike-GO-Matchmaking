@@ -97,7 +97,7 @@ namespace CSGOCSB.ViewModel
             }
         }
 
-        async Task ApplyServerBlockingCommandExecuteAsync()
+        void ApplyServerBlockingCommandExecuteAsync()
         {
             ServerClickHelper.ApplyServerBlocking();
         }

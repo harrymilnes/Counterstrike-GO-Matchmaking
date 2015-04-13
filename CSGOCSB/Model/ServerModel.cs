@@ -37,7 +37,7 @@ namespace CSGOCSB.Model
         public Margin LabelMargin { get; set; }
         public string LabelMarginString { get; set; }
 
-        public static async Task<ServerModel> CreateServerAsync(string country, Margin margin, string hostname, string remoteIpRange)
+        public static ServerModel CreateServer(string country, Margin margin, string hostname, string remoteIpRange)
         {
             var steamServer = new ServerModel
             {
@@ -52,7 +52,6 @@ namespace CSGOCSB.Model
             };
 
             steamServer.LabelMarginString = steamServer.LabelMargin.ToString();
-            await NetworkHelper.PingAsync(steamServer);
             return steamServer;
         }
 
