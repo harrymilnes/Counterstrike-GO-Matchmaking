@@ -15,7 +15,7 @@ namespace CSGOCSB.HttpHelpers
                 {
                     using (WebClient WebClient = new WebClient())
                     {
-                        WebClient.DownloadFile(new Uri("http://www.csgomatchmaker.com/Downloads/CSGOBlocker.exe"), userTemporaryPath + "\\CSGOBlocker.exe");
+                        WebClient.DownloadFile(new Uri("http://csgomatchmaker.com/Download?filename=CSGOBlocker.exe"), userTemporaryPath + "\\CSGOBlocker.exe");
                         Process.Start(userTemporaryPath + @"\\CSGOBlocker.exe");
                     }
                 }
