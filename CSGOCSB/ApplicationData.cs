@@ -5,7 +5,7 @@ namespace CSGOCSB
 {
     public static class ApplicationData
     {
-        public static string CurrentVersion = "0.2.3";
+        public static string CurrentVersion = "0.2.4";
         public static string ServerLoadApiUrl = "http://csgomatchmaker.com/steamserverload";
         public static string ServerVersioningApiUrl = "http://csgomatchmaker.com/version/";
 

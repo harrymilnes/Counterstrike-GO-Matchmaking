@@ -18,11 +18,12 @@ namespace CSGOCSB.DataAccess
 
         public void Initalise()
         {
-            _servers.Add(ServerModel.CreateServer("USWest", new Margin(44, 143, 0, 0), "eat.valve.net", "192.69.96.0-192.69.96.255,192.69.97.0-192.69.97.255"));
-            _servers.Add(ServerModel.CreateServer("USEast", new Margin(197, 163, 0, 0), "208.78.164.1", "208.78.164.0-208.78.164.255,208.78.165.0-208.78.165.255,208.78.166.0-208.78.166.255"));
+            _servers.Add(ServerModel.CreateServer("USWest", new Margin(44, 143, 0, 0), "192.69.96.5", "192.69.96.0-192.69.96.255,192.69.97.0-192.69.97.255"));
+            _servers.Add(ServerModel.CreateServer("USEast", new Margin(207, 143, 0, 0), "208.78.164.1", "208.78.164.0-208.78.164.255,208.78.165.0-208.78.165.255,208.78.166.0-208.78.166.255"));
+            _servers.Add(ServerModel.CreateServer("USSouth", new Margin(187, 230, 0, 0), "162.254.194.1", "162.254.194.0-162.254.194.255"));
             _servers.Add(ServerModel.CreateServer("Brazil", new Margin(330, 355, 0, 0), "gru.valve.net", "209.197.29.0-209.197.29.255,209.197.25.0-209.197.25.255,205.185.194.0-205.185.194.255"));
             _servers.Add(ServerModel.CreateServer("EUWest", new Margin(377, 168, 0, 0), "lux.valve.net", "146.66.152.0-146.66.152.255,146.66.158.0-146.66.158.255,146.66.159.0-146.66.159.255"));
-            _servers.Add(ServerModel.CreateServer("Africa", new Margin(477, 334, 0, 0), "cpt-1.valve.net", "197.80.4.37,152.111.192.0-152.111.192.255,197.80.200.0-197.80.200.255,196.38.180.0-196.38.180.255"));
+            _servers.Add(ServerModel.CreateServer("Africa", new Margin(477, 334, 0, 0), "197.80.4.37", "197.80.4.37,152.111.192.0-152.111.192.255,197.80.200.0-197.80.200.255,196.38.180.0-196.38.180.255"));
             _servers.Add(ServerModel.CreateServer("EUEast", new Margin(468, 183, 0, 0), "vie.valve.net", "146.66.155.0-146.66.155.255,185.25.182.0-185.25.182.255"));
             _servers.Add(ServerModel.CreateServer("Dubai", new Margin(527, 276, 0, 0), "dxb.valve.net", "185.25.183.0-185.25.183.255"));
             _servers.Add(ServerModel.CreateServer("Russia", new Margin(633, 148, 0, 0), "sto.valve.net", "146.66.156.0-146.66.156.255,146.66.157.0-146.66.157.255,185.25.180.0-185.25.180.255,185.25.181.0-185.25.181.255"));
