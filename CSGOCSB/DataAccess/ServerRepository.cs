@@ -18,7 +18,7 @@ namespace CSGOCSB.DataAccess
 
         public void Initalise()
         {
-            _servers.Add(ServerModel.CreateServer("USWest", new Margin(44, 143, 0, 0), "192.69.96.5", "192.69.96.0-192.69.96.255,192.69.97.0-192.69.97.255"));
+            _servers.Add(ServerModel.CreateServer("USWest", new Margin(44, 143, 0, 0), "192.69.96.1", "192.69.96.0-192.69.96.255,192.69.97.0-192.69.97.255"));
             _servers.Add(ServerModel.CreateServer("USEast", new Margin(207, 143, 0, 0), "208.78.164.1", "208.78.164.0-208.78.164.255,208.78.165.0-208.78.165.255,208.78.166.0-208.78.166.255"));
             _servers.Add(ServerModel.CreateServer("USSouth", new Margin(187, 230, 0, 0), "162.254.194.1", "162.254.194.0-162.254.194.255"));
             _servers.Add(ServerModel.CreateServer("Brazil", new Margin(330, 355, 0, 0), "gru.valve.net", "209.197.29.0-209.197.29.255,209.197.25.0-209.197.25.255,205.185.194.0-205.185.194.255"));
