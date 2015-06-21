@@ -84,12 +84,9 @@
     <Compile Include="DataAccess\ServerRepository.cs" />
     <Compile Include="Helpers\FirewallHelper.cs" />
     <Compile Include="Helpers\ServerLoadHelper.cs" />
-    <Compile Include="HttpHelpers\GetLatestSoftwareExecutable.cs" />
     <Compile Include="HttpHelpers\GetCSGOServersLoad.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
-    <Compile Include="Helpers\SoftwareUpdateHelper.cs" />
     <Compile Include="Helpers\ServerClickHelper.cs" />
-    <Compile Include="HttpHelpers\GetSoftwareVersioning.cs" />
     <Compile Include="Model\ServerLoadModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />

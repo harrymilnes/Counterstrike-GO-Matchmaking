@@ -12,14 +12,7 @@ namespace CSGOCSB
             if (!ApplicationData.IsApplicationClosing)
             {
                 InitializeComponent();
-                SoftwareUpdateHelper.CheckIfRunningUnmovedVersion();
-                SoftwareUpdateHelper.CheckForNewerVersions();
             }
-        }
-
-        private void CheckVersion()
-        {
-            SoftwareUpdateHelper.CheckForNewerVersions();
         }
 
         private void CheckForMultipleInstances()
