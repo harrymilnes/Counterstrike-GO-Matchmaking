@@ -12,7 +12,7 @@ namespace CSGOCSB.HttpHelpers
     {
         public static void CheckForNewerVersions()
         {
-            var apiVersion = HttpHelpers.GetApiVersion();
+            var apiVersion = HttpHelpers.GetApiVersion().Replace("\"", "");
             if(apiVersion != ApplicationData.CurrentVersion)
             {
                 var promptBoxDescription = String.Format("Newer version of this software has been detected, would you like to update?\n\nCurrent version: {0}\nLive version: {1}", ApplicationData.CurrentVersion, apiVersion);
