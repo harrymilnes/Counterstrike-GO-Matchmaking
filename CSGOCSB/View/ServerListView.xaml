@@ -10,7 +10,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Canvas>
-                        <Button Content="{Binding Country}" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="{Binding BlockedColourBrush}" Foreground="White" Margin="{Binding ButtonMarginString}" VerticalAlignment="Top" Width="64" Height="24" Command="{Binding ServerSelectCommand}"/>
+                        <Button Content="{Binding Country}" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" FontSize="11" BorderBrush="{Binding BlockedColourBrush}" Foreground="White" Margin="{Binding ButtonMarginString}" VerticalAlignment="Top" Width="70" Height="24" Command="{Binding ServerSelectCommand}"/>
                         <Label Content="{Binding Ping}" HorizontalAlignment="Left" Background="Transparent" Foreground="White" Margin="{Binding LabelMarginString}" VerticalAlignment="Top" Width="80" Height="30"/>
                     </Canvas>
                 </DataTemplate>
