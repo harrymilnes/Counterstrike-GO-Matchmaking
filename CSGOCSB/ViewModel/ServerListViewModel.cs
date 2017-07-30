@@ -79,9 +79,6 @@ namespace CSGOCSB.ViewModel
         {
             if(ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.BlockingServers || ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.ObservingServerPings)
                 await NetworkHelper.PingAllServersAsync();
-
-            if (ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.ObservingServerLoad)
-                await ServerLoadHelper.UpdateAllServerLoads();
         }
 
         RelayCommand _applyCommand;
@@ -139,41 +136,12 @@ namespace CSGOCSB.ViewModel
             {
                 ApplicationData.ApplicationStatus = ApplicationData.ProgramStatus.BlockingServers;
                 _blockServersButtonColour = new SolidColorBrush(Colors.Green);
-                _serverLoadButtonColour = new SolidColorBrush(Colors.Red);
                 _serverPingButtonColour = new SolidColorBrush(Colors.Red);
                 BottomMenuButtonColour = new SolidColorBrush(Colors.DodgerBlue);
                 BottomMenuButtonVisiblity = Visibility.Visible;
                 ServerClickHelper.ChangeColourAllServer(new SolidColorBrush(Colors.White));
                 ServerClickHelper.ChangeAllServerStatus("Pinging");
                 await NetworkHelper.PingAllServersAsync();
-            }
-        }
-
-        RelayCommand _serverLoadMenuCommand;
-        public ICommand ServerLoadMenuCommand
-        {
-            get
-            {
-                if (_serverLoadMenuCommand == null)
-                {
-                    _serverLoadMenuCommand = new RelayCommand(param => this.ServerLoadMenuButtonExecute(), param => this.TopMenuCommandsCanExecute);
-                }
-                return _serverLoadMenuCommand;
-            }
-        }
-
-        async Task ServerLoadMenuButtonExecute()
-        {
-            if (ApplicationData.ApplicationStatus != ApplicationData.ProgramStatus.ObservingServerLoad)
-            {
-                ApplicationData.ApplicationStatus = ApplicationData.ProgramStatus.ObservingServerLoad;
-                _blockServersButtonColour = new SolidColorBrush(Colors.Red);
-                _serverLoadButtonColour = new SolidColorBrush(Colors.Green);
-                _serverPingButtonColour = new SolidColorBrush(Colors.Red);
-                BottomMenuButtonColour = new SolidColorBrush(Colors.White);
-                BottomMenuButtonVisiblity = Visibility.Hidden;
-                ServerClickHelper.ChangeColourAllServer(new SolidColorBrush(Colors.White));
-                await ServerLoadHelper.UpdateAllServerLoads();
             }
         }
 
@@ -196,7 +164,6 @@ namespace CSGOCSB.ViewModel
             {
                 ApplicationData.ApplicationStatus = ApplicationData.ProgramStatus.ObservingServerPings;
                 _blockServersButtonColour = new SolidColorBrush(Colors.Red);
-                _serverLoadButtonColour = new SolidColorBrush(Colors.Red);
                 _serverPingButtonColour = new SolidColorBrush(Colors.Green);
                 BottomMenuButtonColour = new SolidColorBrush(Colors.White);
                 BottomMenuButtonVisiblity = Visibility.Hidden;
@@ -261,20 +228,6 @@ namespace CSGOCSB.ViewModel
             {
                 _blockServersButtonColour = value;
                 OnPropertyChanged(() => this.BlockServersButtonColour);
-            }
-        }
-
-        private Brush _serverLoadButtonColour = new SolidColorBrush(Colors.Red);
-        public Brush ServerLoadButtonColour
-        {
-            get
-            {
-                return _serverLoadButtonColour;
-            }
-            set
-            {
-                _serverLoadButtonColour = value;
-                OnPropertyChanged(() => this.ServerLoadButtonColour);
             }
         }
 

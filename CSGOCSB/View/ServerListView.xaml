@@ -17,9 +17,8 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="280,25,0,0">
+            <StackPanel Orientation="Horizontal" Margin="341,25,0,0">
                 <Button Content="Block Servers" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="{Binding BlockServersButtonColour}" Foreground="White"  Width="80" Height="24" Margin="20,0,20,0" Command="{Binding BlockServersMenuCommand}"/>
-                <Button Content="Server Load" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="{Binding ServerLoadButtonColour}" Foreground="White" Width="80" Height="24" Margin="20,0,20,0" Command="{Binding ServerLoadMenuCommand}"/>
                 <Button Content="Server Pings" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="{Binding ServerPingButtonColour}" Foreground="White" Width="80" Height="24" Margin="20,0,20,0" Command="{Binding ServerPingMenuCommand}"/>
             </StackPanel>
         </StackPanel>
