@@ -2,228 +2,78 @@
 using CSGOCSB.HttpHelpers;
 using CSGOCSB.Model;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Linq;
 
 namespace CSGOCSB.ViewModel
 {
     public class ServerListViewModel : ViewModelBase
     {
-        ServerRepository _serverRepository;
-        public static bool ServersCurrentlyBlocked;
+        private ModelClickHelper _modelClickHelper;
+        private ServerRepository _serverRepository;
 
-        public ObservableCollection<ServerModel> AllServers
-        {
-            get;
-            private set;
-        }
+        public ObservableCollection<ServerModel> AllServers { get; private set; }
 
         public ServerListViewModel(ServerRepository serverRepository)
         {
             _serverRepository = serverRepository;
+            _modelClickHelper = new ModelClickHelper();
             this.AllServers = new ObservableCollection<ServerModel>(serverRepository.GetServers());
-        }
-
-        bool TopMenuCommandsCanExecute
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        bool BottomMenuCommandsCanExecute
-        {
-            get
-            {
-                return true;
-            }
         }
 
         #region Commands
         RelayCommand _AboutCommand;
         public ICommand AboutCommand
         {
-            get
-            {
-                if (_AboutCommand == null)
-                {
-                    _AboutCommand = new RelayCommand(param => this.AboutCommandExecute(), param => this.TopMenuCommandsCanExecute);
-                }
-                return _AboutCommand;
-            }
+            get => _AboutCommand ?? (_AboutCommand = new RelayCommand(param => this.AboutCommandExecute(), param => true));
         }
 
         public void AboutCommandExecute()
-        {
-            Process.Start("https://github.com/harrymilnes/CS-GO-CSB");
-        }
+            => _modelClickHelper.OpenAboutWebpage();
 
         RelayCommand _pingallCommand;
         public ICommand PingAllCommand
         {
-            get
-            {
-                if (_pingallCommand == null)
-                {
-                    _pingallCommand = new RelayCommand(param => this.PingAllCommandExecuteAsync(), param => this.TopMenuCommandsCanExecute);
-                }
-                return _pingallCommand;
-            }
+            get => _pingallCommand ?? (_pingallCommand = new RelayCommand(param => this.PingAllCommandExecuteAsync(), param => true));
         }
 
-        async Task PingAllCommandExecuteAsync()
-        {
-            if(ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.BlockingServers || ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.ObservingServerPings)
-                await NetworkHelper.PingAllServersAsync();
-        }
-
-        RelayCommand _applyCommand;
-        public ICommand ApplyCommand
-        {
-            get
-            {
-                if (_applyCommand == null)
-                {
-                    _applyCommand = new RelayCommand(param => this.ApplyServerBlockingCommandExecuteAsync(), param => this.BottomMenuCommandsCanExecute);
-                }
-                return _applyCommand;
-            }
-        }
-
-        void ApplyServerBlockingCommandExecuteAsync()
-        {
-            ServerClickHelper.ApplyServerBlocking();
-        }
+        private async Task PingAllCommandExecuteAsync()
+            => await _modelClickHelper.RefreshAllServers();
 
         RelayCommand _resetCommand;
         public ICommand ResetCommand
         {
-            get
-            {
-                if (_resetCommand == null)
-                {
-                    _resetCommand = new RelayCommand(param => this.ResetAllCommandExecuteAsync(), param => this.BottomMenuCommandsCanExecute);
-                }
-                return _resetCommand;
-            }
+            get => _resetCommand ?? (_resetCommand = new RelayCommand(param => this.ResetAllCommandExecuteAsync(), param => true));
         }
 
-        async Task ResetAllCommandExecuteAsync()
-        {
-            await ServerClickHelper.ResetServerBlockingAsync();
-        }
-
-        RelayCommand _blockServersMenuCommand;
-        public ICommand BlockServersMenuCommand
-        {
-            get
-            {
-                if (_blockServersMenuCommand == null)
-                {
-                    _blockServersMenuCommand = new RelayCommand(param => this.BlockServersMenuCommandExecute(), param => this.TopMenuCommandsCanExecute);
-                }
-                return _blockServersMenuCommand;
-            }
-        }
-
-        async Task BlockServersMenuCommandExecute()
-        {
-            if (ApplicationData.ApplicationStatus != ApplicationData.ProgramStatus.BlockingServers)
-            {
-                ApplicationData.ApplicationStatus = ApplicationData.ProgramStatus.BlockingServers;
-                _blockServersButtonColour = new SolidColorBrush(Colors.Green);
-                _serverPingButtonColour = new SolidColorBrush(Colors.Red);
-                BottomMenuButtonColour = new SolidColorBrush(Colors.DodgerBlue);
-                BottomMenuButtonVisiblity = Visibility.Visible;
-                ServerClickHelper.ChangeColourAllServer(new SolidColorBrush(Colors.White));
-                ServerClickHelper.ChangeAllServerStatus("Pinging");
-                await NetworkHelper.PingAllServersAsync();
-            }
-        }
+        private async Task ResetAllCommandExecuteAsync() 
+            => await _modelClickHelper.ResetServerBlockingAsync();
 
         RelayCommand _serverPingMenuCommand;
         public ICommand ServerPingMenuCommand
         {
-            get
-            {
-                if (_serverPingMenuCommand == null)
-                {
-                    _serverPingMenuCommand = new RelayCommand(param => this.ServerPingMenuButtonExecute(), param => this.TopMenuCommandsCanExecute);
-                }
-                return _serverPingMenuCommand;
-            }
+            get => _serverPingMenuCommand ?? (_serverPingMenuCommand = new RelayCommand(param => this.ServerPingMenuButtonExecute(), param => true));
         }
 
-        async Task ServerPingMenuButtonExecute()
+        private async Task ServerPingMenuButtonExecute()
         {
-            if (ApplicationData.ApplicationStatus != ApplicationData.ProgramStatus.ObservingServerPings)
+            if (ApplicationData.CurrentBlockedServers.Any())
             {
-                ApplicationData.ApplicationStatus = ApplicationData.ProgramStatus.ObservingServerPings;
                 _blockServersButtonColour = new SolidColorBrush(Colors.Red);
                 _serverPingButtonColour = new SolidColorBrush(Colors.Green);
-                BottomMenuButtonColour = new SolidColorBrush(Colors.White);
-                BottomMenuButtonVisiblity = Visibility.Hidden;
-                ServerClickHelper.ChangeColourAllServer(new SolidColorBrush(Colors.White));
-                ServerClickHelper.ChangeAllServerStatus("Pinging");
-                await NetworkHelper.PingAllServersAsync();
+                await _modelClickHelper.RefreshAllServers();
             }
         }
         #endregion
 
         #region Properties
-        private Thickness _bottomMenuMargin = new Thickness(200, 450, 0, 0);
-        public Thickness BottomMenuMargin
-        {
-            get
-            {
-                return _bottomMenuMargin;
-            }
-            set
-            {
-                _bottomMenuMargin = value;
-                OnPropertyChanged(() => this.BottomMenuMargin);
-            }
-        }
-
-        private Brush _bottomMenuButtonColour = new SolidColorBrush(Colors.DodgerBlue);
-        public Brush BottomMenuButtonColour
-        {
-            get
-            {
-                return _bottomMenuButtonColour;
-            }
-            set
-            {
-                _bottomMenuButtonColour = value;
-                OnPropertyChanged(() => this.BottomMenuButtonColour);
-            }
-        }
-
-        private Visibility _bottomMenuButtonVisiblity = Visibility.Visible;
-        public Visibility BottomMenuButtonVisiblity
-        {
-            get
-            {
-                return _bottomMenuButtonVisiblity;
-            }
-            set
-            {
-                _bottomMenuButtonVisiblity = value;
-                OnPropertyChanged(() => this.BottomMenuButtonVisiblity);
-            }
-        }
-
         private Brush _blockServersButtonColour = new SolidColorBrush(Colors.Green);
         public Brush BlockServersButtonColour
         {
-            get
-            {
-                return _blockServersButtonColour;
-            }
+            get => _blockServersButtonColour;
+
             set
             {
                 _blockServersButtonColour = value;
@@ -234,10 +84,8 @@ namespace CSGOCSB.ViewModel
         private Brush _serverPingButtonColour = new SolidColorBrush(Colors.Red);
         public Brush ServerPingButtonColour
         {
-            get
-            {
-                return _serverPingButtonColour;
-            }
+            get => _serverPingButtonColour;
+
             set
             {
                 _serverPingButtonColour = value;

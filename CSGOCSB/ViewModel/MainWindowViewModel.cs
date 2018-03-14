@@ -1,12 +1,11 @@
 ﻿using CSGOCSB.DataAccess;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace CSGOCSB.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        ObservableCollection<ViewModelBase> _viewModels;
+        private ObservableCollection<ViewModelBase> _viewModels;
         public static ServerListViewModel viewModel;
 
         private MainWindowViewModel(ViewModelBase viewModel)
@@ -16,21 +15,13 @@ namespace CSGOCSB.ViewModel
 
         public static MainWindowViewModel MainWindowInitaliserAsync()
         {
-            var __serverRepository = ServerRepository.Create();
-            viewModel = new ServerListViewModel(__serverRepository);
+            viewModel = new ServerListViewModel(new ServerRepository());
             return new MainWindowViewModel(viewModel);
         }
 
         public ObservableCollection<ViewModelBase> ViewModels
         {
-            get
-            {
-                if(_viewModels == null)
-                {
-                    _viewModels = new ObservableCollection<ViewModelBase>();
-                }
-                return _viewModels;
-            }
+            get => _viewModels ?? (_viewModels = new ObservableCollection<ViewModelBase>());
         }
     }
 }

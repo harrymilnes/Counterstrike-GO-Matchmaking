@@ -1,4 +1,5 @@
 ﻿using CSGOCSB.HttpHelpers;
+using CSGOCSB.Services;
 using CSGOCSB.ViewModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -6,105 +7,86 @@ using System.Windows.Media;
 
 namespace CSGOCSB.Model
 {
-    public class Margin
-    {
-        public int Left { get; set; }
-        public int Top { get; set; }
-        public int Right { get; set; }
-        public int Bottom { get; set; }
-
-        public Margin(int left, int top, int right, int bottom)
-        {
-            Left = left;
-            Top = top;
-            Right = right;
-            Bottom = bottom;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0}, {1}, {2}, {3}", this.Left, this.Top, this.Right, this.Bottom);
-        }
-    }
-
     public class ServerModel : ViewModelBase
     {
+        private readonly NetworkService _networkService;
+
         public string Country { get; set; }
         public string Hostname { get; set; }
         public string RemoteIpRange { get; set; }
-        public Margin ButtonMargin { get; set; }
-        public string ButtonMarginString { get; set; }
-        public Margin LabelMargin { get; set; }
-        public string LabelMarginString { get; set; }
 
-        public static ServerModel CreateServer(string country, Margin margin, string hostname, string remoteIpRange)
+        public ServerModel()
+        {
+            _networkService = new NetworkService();
+        }
+
+        public static ServerModel CreateServer(string country, string hostname, string remoteIpRange)
         {
             var steamServer = new ServerModel
             {
                 Country = country,
                 Hostname = hostname,
                 RemoteIpRange = remoteIpRange,
-                ButtonMargin = margin,
-                ButtonMarginString = margin.ToString(),
-                LabelMargin = new Margin(margin.Left + 5, margin.Top + 20, margin.Right, margin.Bottom),
-                Ping = "Pinging",
-                BlockedColourBrush = new SolidColorBrush(Colors.White)
+                Ping = Constants.PingingPhrase,
+                BlockedButtonBorderBrush = new SolidColorBrush(Colors.White),
+                BlockButtonContent = Constants.BlockPhrase
             };
 
-            steamServer.LabelMarginString = steamServer.LabelMargin.ToString();
+            new NetworkService().Ping(steamServer);
+
             return steamServer;
         }
 
         RelayCommand _ServerSelectCommand;
         public ICommand ServerSelectCommand
         {
-            get
-            {
-                if (_ServerSelectCommand == null)
-                {
-                    _ServerSelectCommand = new RelayCommand(param => this.SelectCommandExecuteAsync(), param => this.BlockCommandCanExecute);
-                }
-                return _ServerSelectCommand;
-            }
+            get => _ServerSelectCommand ?? (_ServerSelectCommand = new RelayCommand(param => this.SelectCommandExecuteAsync(), param => true));
         }
 
         public async Task SelectCommandExecuteAsync()
-        {
-            if(ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.BlockingServers)
-                await ServerClickHelper.ServerClickedAsync(this);
+            => await new ModelClickHelper().ServerClickedAsync(this);
 
-            if (ApplicationData.ApplicationStatus == ApplicationData.ProgramStatus.ObservingServerPings)
-                await NetworkHelper.PingAsync(this);
-        }
-
-        bool BlockCommandCanExecute
+        private Brush _blockedButtonBorderBrush;
+        public Brush BlockedButtonBorderBrush
         {
-            get
-            {
-                return true;
-            }
-        }
+            get => _blockedButtonBorderBrush;
 
-        private Brush _blockedColourBrush;
-        public Brush BlockedColourBrush
-        {
-            get
-            {
-                return _blockedColourBrush;
-            }
             set
             {
-                _blockedColourBrush = value;
-                OnPropertyChanged(() => this.BlockedColourBrush);
+                _blockedButtonBorderBrush = value;
+                OnPropertyChanged(() => this.BlockedButtonBorderBrush);
             }
         }
+
+        private string _blockButtonContent;
+        public string BlockButtonContent
+        {
+            get => _blockButtonContent;
+
+            set
+            {
+                _blockButtonContent = value;
+                OnPropertyChanged(() => this.BlockButtonContent);
+            }
+        }
+
+        private Brush _pingIndicatorBrushColour;
+        public Brush PingIndicatorBrushColour
+        {
+            get => _pingIndicatorBrushColour;
+
+            set
+            {
+                _pingIndicatorBrushColour = value;
+                OnPropertyChanged(() => this.PingIndicatorBrushColour);
+            }
+        }
+
         private bool _blockStatus;
         public bool BlockStatus
         {
-            get
-            {
-                return _blockStatus;
-            }
+            get => _blockStatus;
+
             set
             {
                 _blockStatus = value;
@@ -115,10 +97,8 @@ namespace CSGOCSB.Model
         private string _ping;
         public string Ping
         {
-            get
-            {
-                return _ping;
-            }
+            get => _ping;
+
             set
             {
                 _ping = value;

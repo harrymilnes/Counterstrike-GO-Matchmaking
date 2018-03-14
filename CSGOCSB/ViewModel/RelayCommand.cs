@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace CSGOCSB.ViewModel
@@ -15,21 +14,16 @@ namespace CSGOCSB.ViewModel
             _canExecute = canExecute;
         }
 
-        [DebuggerStepThrough]
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null ? true : _canExecute(parameter);
-        }
-
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
+        public bool CanExecute(object parameter)
+            => _canExecute == null || _canExecute(parameter);
+
         public void Execute (object parameter)
-        {
-            _execute(parameter);
-        }
+            => _execute(parameter);
     }
 }

@@ -3,18 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:CSGOCSB.ViewModel"
         xmlns:vw="clr-namespace:CSGOCSB.View"
-        Title="CS:GO Competitive Server Blocker" Height="599.153" Width="916.525" ResizeMode="NoResize"
-        Closing="Window_Closing">
-
+        Title="CS:GO Competitive Server Blocker" ResizeMode="NoResize"
+        Closing="Window_Closing" Height="754" Width="496"
+        WindowStyle="ToolWindow">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:ServerListViewModel}">
             <vw:ServerListView/>
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <Image Source="Content/WorldMap_Image.jpg" Stretch="UniformToFill"/>
         <ItemsControl ItemsSource="{Binding ViewModels}"/>
-        
-
     </Grid>
 </Window>

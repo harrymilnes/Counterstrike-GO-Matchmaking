@@ -8,11 +8,11 @@ namespace CSGOCSB
         protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
             MainWindow window = new MainWindow();
             var viewModel = MainWindowViewModel.MainWindowInitaliserAsync();
             window.DataContext = viewModel;
             window.Show();
-            await NetworkHelper.PingAllServersAsync();
         }
     }
 }

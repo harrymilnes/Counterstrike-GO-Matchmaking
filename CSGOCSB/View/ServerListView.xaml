@@ -5,30 +5,67 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="599.153" d:DesignWidth="916.525">
+
     <StackPanel>
-        <ItemsControl ItemsSource="{Binding AllServers}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Canvas>
-                        <Button Content="{Binding Country}" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" FontSize="11" BorderBrush="{Binding BlockedColourBrush}" Foreground="White" Margin="{Binding ButtonMarginString}" VerticalAlignment="Top" Width="70" Height="24" Command="{Binding ServerSelectCommand}"/>
-                        <Label Content="{Binding Ping}" HorizontalAlignment="Left" Background="Transparent" Foreground="White" Margin="{Binding LabelMarginString}" VerticalAlignment="Top" Width="80" Height="30"/>
-                    </Canvas>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            <Grid>
+                <ListView AlternationCount="2" ItemsSource="{Binding AllServers}" Background="#1C1E1D" BorderThickness="0">
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Focusable" Value="false"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Height" Value="25"/>
+                            <Style.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                                    <Setter Property="Background" Value="#1C1E1D" />
+                                </Trigger>
+                                <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                                    <Setter Property="Background" Value="#272829" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="75">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="{Binding BlockButtonContent}" HorizontalAlignment="Left" Background="#1C1E1D" BorderBrush="{Binding BlockedButtonBorderBrush}"  BorderThickness="1" Foreground="White" Width="50" Height="20" Command="{Binding ServerSelectCommand}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="245" DisplayMemberBinding="{Binding Country}" />
+                            <GridViewColumn Width="100" DisplayMemberBinding="{Binding Ping}" />
+                            <GridViewColumn Width="30">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Fill="{Binding PingIndicatorBrushColour}" Height="10" Width="10"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="341,25,0,0">
-                <Button Content="Block Servers" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="{Binding BlockServersButtonColour}" Foreground="White"  Width="80" Height="24" Margin="20,0,20,0" Command="{Binding BlockServersMenuCommand}"/>
-                <Button Content="Server Pings" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="{Binding ServerPingButtonColour}" Foreground="White" Width="80" Height="24" Margin="20,0,20,0" Command="{Binding ServerPingMenuCommand}"/>
-            </StackPanel>
-        </StackPanel>
-        
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="{Binding BottomMenuMargin}">
-                <Button Content="Apply" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" Visibility="{Binding BottomMenuButtonVisiblity}" BorderBrush="{Binding BottomMenuButtonColour}" Foreground="White" Width="80" Height="24" Margin="20,0,20,0" Command="{Binding ApplyCommand}"/>
-                <Button Content="Reset" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" Visibility="{Binding BottomMenuButtonVisiblity}" BorderBrush="{Binding BottomMenuButtonColour}" Foreground="White" Width="80" Height="24" Margin="20,0,20,0" Command="{Binding ResetCommand}"/>
-                <Button Content="Refresh" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="DodgerBlue" Foreground="White"  Width="80" Height="24" Margin="20,0,20,0" Command="{Binding PingAllCommand}"/>
-                <Button Content="About" HorizontalAlignment="Left" Background="Transparent" BorderThickness="2" BorderBrush="DodgerBlue" Foreground="White" Width="80" Height="24" Margin="20,0,20,0" Command="{Binding AboutCommand}"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Ping" HorizontalAlignment="Left" Background="#1C1E1D" BorderThickness="1" BorderBrush="#1565C0" Foreground="White"  Width="160" Height="40" Command="{Binding PingAllCommand}"/>
+                <Button Content="Reset" HorizontalAlignment="Left" Background="#1C1E1D" BorderThickness="1" BorderBrush="#1565C0" Foreground="White" Width="160" Height="40" Command="{Binding ResetCommand}"/>
+                <Button Content="About" HorizontalAlignment="Left" Background="#1C1E1D" BorderThickness="1" BorderBrush="#1565C0" Foreground="White" Width="160" Height="40" Command="{Binding AboutCommand}"/>
             </StackPanel>
         </StackPanel>
     </StackPanel>
